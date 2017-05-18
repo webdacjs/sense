@@ -1,8 +1,10 @@
 {
+"update_url": "https://clients2.google.com/service/update2/crx",
+
    "manifest_version": 2,
 
-   "name": "Sense (Beta)",
-   "description": "A JSON aware developer console to ElasticSearch.",
+   "name": "Better Sense",
+   "description": "A JSON aware developer console to ElasticSearch customized for JS.",
     "version": "0.9.0",
 
     "icons": {

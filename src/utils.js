@@ -274,5 +274,64 @@
         session.on('tokenizerUpdate', mycallback);
         session.setValue(data);
     }
+    function repeat(s, count) {
+      return new Array(count + 1).join(s);
+    }
+
+    ns.formatJson = function(json) {
+        var old_json = JSON.parse(json);
+        var new_json_string = JSON.stringify(old_json, null, 2);
+        return new_json_string;
+    }
+
+    // Set query in newline.
+    ns.setQueryInNewLine = function (query) {
+      var session = sense.editor.getSession();
+      var pos = sense.editor.getCursorPosition();
+      var prefix = "";
+      var suffix = "\n";
+      if (sense.utils.isStartRequestRow(pos.row)) {
+         pos.column = 0;
+         suffix += "\n";
+      }
+      else if (sense.utils.isEndRequestRow(pos.row)) {
+         var line = session.getLine(pos.row);
+         pos.column = line.length;
+         prefix = "\n\n";
+      }
+      else if (sense.utils.isInBetweenRequestsRow(pos.row)) {
+         pos.column = 0;
+      }
+      else {
+         pos = sense.utils.nextRequestEnd(pos);
+         prefix = "\n\n";
+      }
+
+      session.insert(pos, query);
+      sense.editor.clearSelection();
+      sense.editor.moveCursorTo(pos.row + prefix.length, 0);
+      sense.editor.focus();
+    }
+
+    // Juan: Function to create a json call formatted_data
+    ns.dacFormatQuery = function (element) {
+
+       data = this.getCurrentRequest();
+       final_string = String(data.method) + " " + String(data.url) + "\n"
+
+       s = "\n\n" + final_string + this.formatJson(String(data.data));
+       this.setQueryInNewLine(s)
+
+    }
+    ns.localhostport = function(){
+      if(localStorage['localstorageport']){
+        return localStorage['localstorageport'];
+      }
+      else {
+        asklocalstorageport = prompt("Enter ES local port (ie 9200) ")
+        localStorage['localstorageport'] = asklocalstorageport;
+        return localStorage['localstorageport'];
+      }
+    }
 
 })();

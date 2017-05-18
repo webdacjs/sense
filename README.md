@@ -1,7 +1,13 @@
 
-Sense is now part of Marvel
+Better Sense.
 =====
 
-The development of Sense has moved into Elasticsearch Marvel, you can find it here: http://www.elasticsearch.org/overview/marvel/
+Better Sense is a customize version of the Sense extension for JS. It contains the following features:
 
-If you have any question or find an issue, feel free to post on the elasticsearch user group: http://groups.google.com/forum/#!forum/elasticsearch
+1. Note button to format ES queries (JSON formatting).
+
+2. Buttons to Match All and Match by Id.
+
+3. Buttons to switch to localhost easily.
+
+4. Dropdown to easily get metadata about the indices.

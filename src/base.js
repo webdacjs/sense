@@ -87,6 +87,9 @@ function callES(server, url, method, data, successCallback, completeCallback) {
         success: successCallback
     });
 }
+function formatEsQuery(){
+    sense.utils.dacFormatQuery()
+}
 
 function submitCurrentRequestToES() {
     var req = sense.utils.getCurrentRequest();
@@ -364,6 +367,11 @@ function init() {
         exec: moveToNextRequestEdge
     });
 
+    sense.editor.commands.addCommand({
+        name: 'json nice formatting of the ES query',
+        bindKey: {win: 'Ctrl-Shift-F', mac: 'Command-Shift-F'},
+        exec: formatEsQuery
+    });
 
     var orig_paste = sense.editor.onPaste;
     sense.editor.onPaste = function (text) {
@@ -440,6 +448,13 @@ function init() {
         submitCurrentRequestToES();
         return false;
     });
+
+    $("#formatquery").tooltip();
+    $("#formatquery").click(function () {
+        formatEsQuery();
+        return false;
+    });
+
 
     $("#copy_as_curl").click(function (e) {
         copyAsCURL();
@@ -543,9 +558,50 @@ function init() {
 
 $(document).ready(init);
 
+$("#localhost_btn").click(function () {
+    localport = sense.utils.localhostport();
+    $("#es_server").val("http://localhost:" + localport + "/stale/")
+})
+$("#indices_btn").click(function () {
+    var query = "GET /_cat/indices?v\n\n";
+    sense.utils.setQueryInNewLine(query);
+});
+$("#aliases_btn").click(function () {
+    var query = "GET /_aliases\n\n";
+    sense.utils.setQueryInNewLine(query);
+});
+$("#aliasescreate_btn").click(function () {
+    nameindex = prompt("Name of the index?")
+    namealias = prompt("Name of the alias?")
+    var query = "POST /_aliases\n" + sense.utils.formatJson("{\"actions\":[{\"add\":{\"index\":\""+nameindex+"\",\"alias\":\""+namealias+"\"}}]}");
+    sense.utils.setQueryInNewLine(query);
+});
+$("#mapping_btn").click(function () {
+    var query = "GET _mapping\n\n";
+    sense.utils.setQueryInNewLine(query);
+});
+
+$("#health_btn").click(function () {
+    var query = "GET /_cat/health?v\n\n";
+    sense.utils.setQueryInNewLine(query);
+});
+
+
+$("#matchall_btn").click(function () {
+    var query = "GET _search\n" + sense.utils.formatJson("{\"query\":{\"match_all\":{}}}");
+    sense.utils.setQueryInNewLine(query);
+});
+$("#matchids_btn").click(function () {
+    ids = prompt("Enter the id(s) to search")
+    var query = "GET _search\n" + sense.utils.formatJson('{"query" : {"ids": {"values":["' + ids + '"]}}}');
+    sense.utils.setQueryInNewLine(query);
+});
+
+
+
 /* google analytics */
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-11830182-16']);
+_gaq.push(['_setAccount', 'UA-XXXXXX-16']);
 _gaq.push(['_setCustomVar',
     1,                // This custom var is set to slot #1.  Required parameter.
     'Version',    // The name of the custom variable.  Required parameter.
@@ -563,4 +619,3 @@ _gaq.push(['_trackPageview']);
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(ga, s);
 })();
-
