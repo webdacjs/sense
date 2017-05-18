@@ -560,7 +560,7 @@ $(document).ready(init);
 
 $("#localhost_btn").click(function () {
     localport = sense.utils.localhostport();
-    $("#es_server").val("http://localhost:" + localport + "/stale/")
+    $("#es_server").val("http://localhost:" + localport);
 })
 $("#indices_btn").click(function () {
     var query = "GET /_cat/indices?v\n\n";
