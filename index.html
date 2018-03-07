@@ -13,15 +13,18 @@
         <span class="brand" id="server_label">JC Server</span>
 
         <form class="navbar-form pull-left">
-            <input id="es_server" type="text" class="span5" value="localhost:9200"/>
+            <input id="es_server" type="text" class="span5" value=""/>
+            <span style="margin-left: 10px; margin-top: 10px;">Index:</span>
+            <input id="es_server_index" type="text" class="span3" value=""/>
         </form>
         <button class="pull-left btn btn-link"><span id="notification" style="visibility: hidden"
                                                      class="label label-info"></span></button>
-        <button id="help_btn" class="btn-info pull-right-btn" data-toggle="modal" data-target="#help_popup">Help</button>
-        <button id="history_btn" class="btn-info pull-right-btn" data-toggle="modal" data-target="#history_popup">History</button>
-        <button id="localhost_btn" class="btn-warning pull-right-btn">Localhost</button>
-        <button id="matchall_btn" class="btn-success pull-right-btn">Match All Query</button>
-        <button id="matchids_btn" class="btn-success pull-right-btn">Match Ids</button>
+        <button id="bookmark_btn" class="btn red pull-right-btn">^^</button>
+        <button id="help_btn" class="btn blue pull-right-btn" data-toggle="modal" data-target="#help_popup">Help</button>
+        <button id="history_btn" class="btn blue pull-right-btn" data-toggle="modal" data-target="#history_popup">History</button>
+        <button id="localhost_btn" class="btn orange pull-right-btn">Localhost</button>
+        <button id="matchall_btn" class="btn green pull-right-btn">Match All Query</button>
+        <button id="matchids_btn" class="btn green pull-right-btn">Match Ids</button>
         <div class="btn-group">
                         <button class="btn dropdown-toggle" data-toggle="dropdown">Metadata <span class="caret"></span></button>
                         <ul class="dropdown-menu">
@@ -139,6 +142,25 @@
 </div>
 
 <textarea class="out_of_screen" id="clipboardStaging"> </textarea>
+
+<style>
+.green {
+  background-color: #62c462;
+  border: 1px solid #62c462 ! important;
+}
+.blue {
+  background-color: #0088cc;
+  border: 1px solid #0088cc ! important;
+}
+.orange {
+  background-color: #f89406;
+  border: 1px solid #f89406 ! important;
+}
+.red {
+  background-color: #ee5f5b;
+  border: 1px solid #ee5f5b ! important;
+}
+</style>
 
 </body>
 <script src="lib/jquery-1.8.3.min.js" type="text/javascript"></script>
