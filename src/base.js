@@ -102,8 +102,15 @@ function submitCurrentRequestToES () {
 
   $('#notification').text('Calling ES....').css('visibility', 'visible')
   sense.output.getSession().setValue('')
+  var queryBodyLength = (req.data[0] || []).length
 
-  var es_server = getJoinedESServer()
+  console.log(queryBodyLength)
+  var es_server
+  if (queryBodyLength > 0) {
+    es_server = getJoinedESServer()
+  } else {
+    es_server = $('#es_server').val()
+  }
   var es_url = req.url
   var es_method = req.method
   var es_data = req.data.join('\n')
@@ -533,10 +540,10 @@ function init () {
   }
   var searchParams = new URLSearchParams(window.location.search)
   // console.log(window.location)
-  if(searchParams.get('server') !== null){
+  if (searchParams.get('server') !== null) {
     $('#es_server').val(searchParams.get('server'))
   }
-  if(searchParams.get('index') !== null) {
+  if (searchParams.get('index') !== null) {
     $('#es_server_index').val(searchParams.get('index'))
   }
   // console.log(searchParams.get('index'))
