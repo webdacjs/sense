@@ -304,11 +304,11 @@
 
     // Juan: Function to create a json call formatted_data
   ns.dacFormatQuery = function (element) {
-    const data = this.getCurrentRequest()
-    const finalString = String(data.method) + ' ' + String(data.url) + '\n'
+    var data = this.getCurrentRequest()
+    var finalString = String(data.method) + ' ' + String(data.url) + '\n'
 
-    const cleanedData = String(data.data).replace(/“/g, '"').replace(/”/g, '"')
-    const s = '\n\n' + finalString + this.formatJson(cleanedData)
+    var cleanedData = String(data.data).replace(/“/g, '"').replace(/”/g, '"')
+    var s = '\n\n' + finalString + this.formatJson(cleanedData)
     this.setQueryInNewLine(s)
   }
   ns.localhostport = function () {
