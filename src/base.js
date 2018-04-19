@@ -2,7 +2,7 @@ if (!sense) {
   sense = { }
 }
 
-sense.VERSION = '0.9.0'
+sense.VERSION = '1.2.0'
 
 // Common function to get the ES Server String.
 function getJoinedESServer () {
@@ -550,55 +550,6 @@ function init () {
 }
 
 $(document).ready(init)
-
-$('#localhost_btn').click(function () {
-  localport = sense.utils.localhostport()
-  $('#es_server').val('http://localhost:' + localport)
-})
-$('#indices_btn').click(function () {
-  var query = 'GET /_cat/indices?v\n\n'
-  sense.utils.setQueryInNewLine(query)
-})
-$('#aliases_btn').click(function () {
-  var query = 'GET /_aliases\n\n'
-  sense.utils.setQueryInNewLine(query)
-})
-$('#aliasescreate_btn').click(function () {
-  nameindex = prompt('Name of the index?')
-  namealias = prompt('Name of the alias?')
-  var query = 'POST /_aliases\n' + sense.utils.formatJson('{"actions":[{"add":{"index":"' + nameindex + '","alias":"' + namealias + '"}}]}')
-  sense.utils.setQueryInNewLine(query)
-})
-$('#mapping_btn').click(function () {
-  var query = 'GET _mapping\n\n'
-  sense.utils.setQueryInNewLine(query)
-})
-
-$('#health_btn').click(function () {
-  var query = 'GET /_cat/health?v\n\n'
-  sense.utils.setQueryInNewLine(query)
-})
-
-$('#matchall_btn').click(function () {
-  var query = 'GET _search\n' + sense.utils.formatJson('{"query":{"match_all":{}}}')
-  sense.utils.setQueryInNewLine(query)
-})
-$('#matchids_btn').click(function () {
-  ids = prompt('Enter the id(s) to search')
-  var query = 'GET _search\n' + sense.utils.formatJson('{"query" : {"ids": {"values":["' + ids + '"]}}}')
-  sense.utils.setQueryInNewLine(query)
-})
-
-$('#bookmark_btn').click(function () {
-  var tlocation = window.location
-  var es_server_val = $('#es_server').val()
-  var es_server_index_val = $('#es_server_index').val()
-  var desturl = tlocation.origin + tlocation.pathname + '?server=' + es_server_val
-  if (es_server_index_val !== '') {
-    desturl += '&index=' + es_server_index_val
-  }
-  window.location = desturl
-})
 
 /* google analytics */
 var _gaq = _gaq || []

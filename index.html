@@ -23,20 +23,31 @@
         <button id="help_btn" class="btn blue pull-right-btn" data-toggle="modal" data-target="#help_popup">Help</button>
         <button id="history_btn" class="btn blue pull-right-btn" data-toggle="modal" data-target="#history_popup">History</button>
         <button id="localhost_btn" class="btn orange pull-right-btn">Localhost</button>
-        <button id="matchall_btn" class="btn green pull-right-btn">Match All Query</button>
-        <button id="matchids_btn" class="btn green pull-right-btn">Match Ids</button>
-        <div class="btn-group">
-                        <button class="btn dropdown-toggle" data-toggle="dropdown">Metadata <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                          <li><a id="indices_btn" href="#">Indices</a></li>
-                          <li><a id="health_btn" href="#">Cluster health</a></li>
-                          <li><a id="aliases_btn" href="#">Aliases</a></li>
-                          <li><a id="mapping_btn" href="#">Mappings</a></li>
+        <button id="matchids_btn" class="btn green pull-right-btn">Ids Q</button>
 
-                          <li class="divider"></li>
-                          <li><a id="aliasescreate_btn" href="#">Create alias</a></li>
-                        </ul>
-                      </div>
+        <div class="btn-group">
+          <button class="btn dropdown-toggle" data-toggle="dropdown">ES Queries <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a id="matchall_btn" href="#">Match All</a></li>
+              <li><a id="filter_btn" href="#">Filter Query</a></li>
+              <li><a id="exists_btn" href="#">Exists Query</a></li>
+              <li class="divider"></li>
+              <li><a id="simpleagg_btn" href="#">Simple Aggregation</a></li>
+            </ul>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn dropdown-toggle" data-toggle="dropdown">Metadata <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a id="indices_btn" href="#">Indices</a></li>
+              <li><a id="health_btn" href="#">Cluster health</a></li>
+              <li><a id="aliases_btn" href="#">Aliases</a></li>
+              <li><a id="mapping_btn" href="#">Mappings</a></li>
+
+              <li class="divider"></li>
+              <li><a id="aliasescreate_btn" href="#">Create alias</a></li>
+            </ul>
+        </div>
 
     </div>
 </div>
@@ -188,4 +199,6 @@
 <script src="src/mappings.js" type="text/javascript" charset="utf-8"></script>
 <script src="src/history.js" type="text/javascript" charset="utf-8"></script>
 <script src="src/autocomplete.js" type="text/javascript" charset="utf-8"></script>
+<script src="src/querybuilder.js" type="text/javascript" charset="utf-8"></script>
+
 </html>
