@@ -23,31 +23,6 @@ var assignQueryInline = function (url, body) {
   sense.utils.setQueryInNewLine(query)
 }
 
-$('#indices_btn').click(function () {
-  assignQueryInline('GET /_cat/indices?v')
-})
-
-$('#aliases_btn').click(function () {
-  assignQueryInline('GET /_aliases')
-})
-
-$('#aliasescreate_btn').click(function () {
-  var index = prompt('Name of the index?')
-  var alias = prompt('Name of the alias?')
-  var url = 'POST /_aliases\n'
-  var body = sense.utils.formatJson(
-    '{"actions":[{"add":{"index":"' + index + '","alias":"' + alias + '"}}]}')
-  assignQueryInline(url, body)
-})
-
-$('#mapping_btn').click(function () {
-  assignQueryInline('GET _mapping')
-})
-
-$('#health_btn').click(function () {
-  assignQueryInline('GET /_cat/health?v')
-})
-
 $('#matchall_btn').click(function () {
   var url = 'GET _search\n'
   var body = sense.utils.formatJson('{"query":{"match_all":{}}}')
@@ -60,15 +35,6 @@ $('#filter_btn').click(function () {
   var url = 'GET _search\n'
   var body = sense.utils.formatJson(
     '{"query":{"bool":{"filter":[{"terms":{"' + f + '":["' + v + '"]}}]}},"_source":["*"]}')
-  assignQueryInline(url, body)
-})
-
-$('#simpleagg_btn').click(function () {
-  var f = prompt('Name of the field?')
-  var a = f + '_agg'
-  var url = 'GET _search\n'
-  var body = sense.utils.formatJson(
-    '{"size":0,"aggs":{"' + a + '":{"terms":{"field":"' + f + '"}}}}')
   assignQueryInline(url, body)
 })
 
@@ -111,6 +77,65 @@ $('#reindex_btn').click(function () {
     baseReindexQuery.source._source = lsource.split(',')
   }
   var url = 'POST _reindex\n'
+  var body = sense.utils.formatJson(JSON.stringify(baseReindexQuery))
+  assignQueryInline(url, body)
+})
+
+
+// Metadata
+
+$('#indices_btn').click(function () {
+  assignQueryInline('GET /_cat/indices?v')
+})
+
+$('#aliases_btn').click(function () {
+  assignQueryInline('GET /_aliases')
+})
+
+$('#aliasescreate_btn').click(function () {
+  var index = prompt('Name of the index?')
+  var alias = prompt('Name of the alias?')
+  var url = 'POST /_aliases\n'
+  var body = sense.utils.formatJson(
+    '{"actions":[{"add":{"index":"' + index + '","alias":"' + alias + '"}}]}')
+  assignQueryInline(url, body)
+})
+
+$('#mapping_btn').click(function () {
+  assignQueryInline('GET _mapping')
+})
+
+$('#health_btn').click(function () {
+  assignQueryInline('GET /_cat/health?v')
+})
+
+// Aggregations
+
+$('#simpleagg_btn').click(function () {
+  var f = prompt('Name of the field?')
+  var a = f + '_agg'
+  var url = 'GET _search\n'
+  var body = sense.utils.formatJson(
+    '{"size":0,"aggs":{"' + a + '":{"terms":{"field":"' + f + '"}}}}')
+  assignQueryInline(url, body)
+})
+
+
+$('#statsagg_btn').click(function () {
+  var f = prompt('Name of the field?')
+  var a = f + '_agg'
+  var baseReindexQuery = {
+    size: 0,
+    aggs: {
+      [a]: {
+        stats: {
+          field: f,
+          missing: 0
+        }
+      }
+    }
+  }
+  var url = 'GET _search\n'
   var body = sense.utils.formatJson(JSON.stringify(baseReindexQuery))
   assignQueryInline(url, body)
 })
