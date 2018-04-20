@@ -86,3 +86,31 @@ $('#matchids_btn').click(function () {
     '{"query" : {"ids": {"values":["' + ids + '"]}}}')
   assignQueryInline(url, body)
 })
+
+$('#reindex_btn').click(function () {
+  var params = prompt('Enter comma separated: source, destination, optionsflag (optional parameter)')
+  params = params.split(',')
+  var source = params[0]
+  var destination = params[1]
+  if (params[2] !== undefined) {
+    var size = prompt('Enter the size of the reindex:')
+    var lsource = prompt('Enter the filtered source comma separated:')
+  }
+  var baseReindexQuery = {
+    source: {
+      index: source
+    },
+    dest: {
+      index: destination
+    }
+  }
+  if (size !== undefined) {
+    baseReindexQuery.source.size = size
+  }
+  if (lsource !== undefined) {
+    baseReindexQuery.source._source = lsource.split(',')
+  }
+  var url = 'POST _reindex\n'
+  var body = sense.utils.formatJson(JSON.stringify(baseReindexQuery))
+  assignQueryInline(url, body)
+})
