@@ -124,7 +124,7 @@ $('#simpleagg_btn').click(function () {
 $('#statsagg_btn').click(function () {
   var f = prompt('Name of the field?')
   var a = f + '_agg'
-  var baseReindexQuery = {
+  var baseStatsaggQuery = {
     size: 0,
     aggs: {
       [a]: {
@@ -136,6 +136,31 @@ $('#statsagg_btn').click(function () {
     }
   }
   var url = 'GET _search\n'
-  var body = sense.utils.formatJson(JSON.stringify(baseReindexQuery))
+  var body = sense.utils.formatJson(JSON.stringify(baseStatsaggQuery))
+  assignQueryInline(url, body)
+})
+
+$('#significantterms_btn').click(function () {
+  var ans = prompt('Enter comma separated: queryfield, queryvalue, aggregationvalue')
+  var params = ans.split(',')
+  var f = params[2] || ''
+  var a = f + '_agg'
+  var baseStAgg = {
+    size: 0,
+    query: {
+      match: {
+        [params[0]]: params[1]
+      }
+    },
+    aggs: {
+      [a]: {
+        significant_terms: {
+          field: f
+        }
+      }
+    }
+  }
+  var url = 'GET _search\n'
+  var body = sense.utils.formatJson(JSON.stringify(baseStAgg))
   assignQueryInline(url, body)
 })
