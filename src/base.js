@@ -67,11 +67,11 @@ function callES (server, url, method, data, successCallback, completeCallback) {
   var password = url_parts[3]
   url = url_parts[1] + url_parts[4]
   console.log('Calling ' + url + '  (uname: ' + uname + ' pwd: ' + password + ')')
-  if (data && method == 'GET') method = 'POST'
+  if (data && method === 'GET') method = 'POST'
 
   $.ajax({
     url: url,
-    data: method == 'GET' ? null : data,
+    data: method === 'GET' ? null : data,
 //      xhrFields: {
 //            withCredentials: true
 //      },
@@ -83,6 +83,9 @@ function callES (server, url, method, data, successCallback, completeCallback) {
 //         xhr.setRequestHeader("Authorization", "Basic " + btoa(uname + ":" + password));
 //      },
 
+    headers: {
+      'Content-Type': 'application/json'
+    },
     password: password,
     username: uname,
     crossDomain: true,
@@ -152,7 +155,7 @@ function reformatData (data, indent) {
     var cur_doc = data[i]
     try {
       var new_doc = JSON.stringify(JSON.parse(cur_doc), null, indent ? 3 : 0)
-      changed = changed || new_doc != cur_doc
+      changed = changed || new_doc !== cur_doc
       formatted_data.push(new_doc)
     } catch (e) {
       console.log(e)
@@ -487,7 +490,7 @@ function init () {
 
   var editor_source = sense.utils.getUrlParam('load_from') || 'stored'
   var last_editor_state = sense.history.getSavedEditorState()
-  if (editor_source == 'stored') {
+  if (editor_source === 'stored') {
     if (last_editor_state) {
       resetToValues(last_editor_state.server, last_editor_state.content)
     } else {
@@ -536,17 +539,14 @@ function init () {
     welcome_popup.on('hidden', function () {
       welcome_popup.find('#example_editor').remove()
     })
-        //  welcome_popup.modal('show');
   }
   var searchParams = new URLSearchParams(window.location.search)
-  // console.log(window.location)
   if (searchParams.get('server') !== null) {
     $('#es_server').val(searchParams.get('server'))
   }
   if (searchParams.get('index') !== null) {
     $('#es_server_index').val(searchParams.get('index'))
   }
-  // console.log(searchParams.get('index'))
 }
 
 $(document).ready(init)
