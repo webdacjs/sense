@@ -140,9 +140,7 @@ function submitCurrentRequestToES () {
     }
   }
     )
-
   saveEditorState()
-
 }
 
 submitCurrentRequestToES = autoRetryIfTokenizing(submitCurrentRequestToES)
