@@ -143,7 +143,6 @@ function submitCurrentRequestToES () {
 
   saveEditorState()
 
-  _gaq.push(['_trackEvent', 'elasticsearch', 'query'])
 }
 
 submitCurrentRequestToES = autoRetryIfTokenizing(submitCurrentRequestToES)
@@ -198,8 +197,6 @@ function copyAsCURL () {
   var req = sense.utils.getCurrentRequest()
   if (!req) return
 
-  _gaq.push(['_trackEvent', 'curl', 'copied'])
-
   var es_server = getJoinedESServer()
   var es_url = req.url
   var es_method = req.method
@@ -223,7 +220,6 @@ function copyAsCURL () {
 copyAsCURL = autoRetryIfTokenizing(copyAsCURL, true)
 
 function handleCURLPaste (text) {
-  _gaq.push(['_trackEvent', 'curl', 'pasted'])
   var curlInput = sense.curl.parseCURL(text)
   if ($('#es_server').val()) curlInput.server = null // do not override server
 
@@ -463,7 +459,6 @@ function init () {
   var help_popup = $('#help_popup')
 
   help_popup.on('shown', function () {
-    _gaq.push(['_trackEvent', 'help', 'shown'])
     $('<div id="example_editor">PUT index/type/1\n'
             + '{\n'
             + '   "body": "here"\n'
@@ -550,24 +545,3 @@ function init () {
 }
 
 $(document).ready(init)
-
-/* google analytics */
-var _gaq = _gaq || []
-_gaq.push(['_setAccount', 'UA-XXXXXX-16'])
-_gaq.push(['_setCustomVar',
-  1,                // This custom var is set to slot #1.  Required parameter.
-  'Version',    // The name of the custom variable.  Required parameter.
-  sense.VERSION,        // The value of the custom variable.  Required parameter.
-  1                 // Sets the scope to visitor-level.  Optional parameter.
-])
-
-_gaq.push(['_trackPageview']);
-
-(function () {
-  var ga = document.createElement('script')
-  ga.type = 'text/javascript'
-  ga.async = true
-  ga.src = 'https://ssl.google-analytics.com/ga.js'
-  var s = document.getElementsByTagName('script')[0]
-  s.parentNode.insertBefore(ga, s)
-})()
