@@ -122,6 +122,10 @@ $('#mapping_btn').click(function () {
   assignQueryInline('GET _mapping')
 })
 
+$('#settings_btn').click(function () {
+  assignQueryInline('GET _settings')
+})
+
 $('#health_btn').click(function () {
   assignQueryInline('GET /_cat/health?v')
 })
