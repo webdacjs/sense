@@ -29,6 +29,23 @@ $('#matchall_btn').click(function () {
   assignQueryInline(url, body)
 })
 
+$('#match_btn').click(function () {
+  var f = prompt('Name of the field?')
+  var v = prompt('Value?')
+  var url = 'GET _search\n'
+  var body = sense.utils.formatJson('{"query":{"match":{"'+f+'":"'+v+'"}}}')
+  assignQueryInline(url, body)
+})
+
+
+$('#matchphrase_btn').click(function () {
+  var f = prompt('Name of the field?')
+  var v = prompt('Value?')
+  var url = 'GET _search\n'
+  var body = sense.utils.formatJson('{"query":{"match_phrase":{"'+f+'":"'+v+'"}}}')
+  assignQueryInline(url, body)
+})
+
 $('#filter_btn').click(function () {
   var f = prompt('Name of the field?')
   var v = prompt('Value?')
