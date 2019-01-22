@@ -157,6 +157,26 @@ $('#statsagg_btn').click(function () {
   assignQueryInline(url, body)
 })
 
+$('#datehistoagg_btn').click(function () {
+  var f = prompt('Name of the date field?')
+  var i = prompt('Name of the date interval?')
+  var a = f + '_agg'
+  var baseStatsaggQuery = {
+    size: 0,
+    aggs: {
+      [a]: {
+        date_histogram: {
+          field: f,
+          interval: i
+        }
+      }
+    }
+  }
+  var url = 'GET _search\n'
+  var body = sense.utils.formatJson(JSON.stringify(baseStatsaggQuery))
+  assignQueryInline(url, body)
+})
+
 $('#significantterms_btn').click(function () {
   var ans = prompt('Enter comma separated: queryfield, queryvalue, aggregationvalue')
   var params = ans.split(',')
